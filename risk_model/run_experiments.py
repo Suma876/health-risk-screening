@@ -104,9 +104,47 @@ plt.axvline(chosen, ls="--", color="gray"); plt.xlabel("threshold"); plt.legend(
 plt.savefig(OUT / "threshold_tradeoff.png", dpi=120); plt.close()
 
 # Save the model for the API (calibrated standard model + screening threshold)
-(OUT / "model.json").write_text(json.dumps({
-    "features": D["features"], "w": model.w.tolist(), "b": float(model.b),
-    "mean": D["mean"], "std": D["std"], "medians": D["medians"],
-    "threshold": chosen, "threshold_table": table, "seed": SEED,
-    "test_metrics_at_threshold": low,
-}, indent=2))
+# ---------------------------------------------------------
+# Save final model artifact
+# ---------------------------------------------------------
+
+final_predictions = (p_te >= chosen).astype(int)
+
+final_cm = confusion_matrix(yte, final_predictions)
+final_metrics = metrics(final_cm)
+
+model_artifact = {
+    "features": D["features"],
+    "w": model.w.tolist(),
+    "b": float(model.b),
+
+    "mean": D["mean"],
+    "std": D["std"],
+    "medians": D["medians"],
+
+    "threshold": chosen,
+    "threshold_table": table,
+    "seed": SEED,
+
+    "test_metrics_at_threshold": final_metrics,
+
+    "confusion_matrix": {
+        "tn": int(final_cm["tn"]),
+        "fp": int(final_cm["fp"]),
+        "fn": int(final_cm["fn"]),
+        "tp": int(final_cm["tp"])
+    }
+}
+
+(OUT / "model.json").write_text(
+    json.dumps(model_artifact, indent=2),
+    encoding="utf-8"
+)
+
+print("\n=== Final confusion matrix at selected threshold ===")
+print(f"TN = {final_cm['tn']}")
+print(f"FP = {final_cm['fp']}")
+print(f"FN = {final_cm['fn']}")
+print(f"TP = {final_cm['tp']}")
+
+print("\nSaved artifacts/model.json")
