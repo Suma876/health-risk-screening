@@ -1,0 +1,34 @@
+{
+  "condition": "Common cold",
+  "category": "respiratory",
+  "description": "A common respiratory illness pattern that usually causes mild upper-respiratory symptoms.",
+  "symptoms": [
+    "runny nose",
+    "stuffy nose",
+    "sneezing",
+    "sore throat",
+    "cough"
+  ],
+  "supporting_symptoms": [
+    "mild fatigue",
+    "mild headache"
+  ],
+  "self_care": [
+    "Get adequate rest.",
+    "Drink adequate fluids.",
+    "Monitor your symptoms."
+  ],
+  "red_flags": [
+    "difficulty breathing",
+    "dehydration",
+    "symptoms that are getting worse",
+    "symptoms that improve and then become worse"
+  ],
+  "seek_medical_care": [
+    "Symptoms are severe or worsening.",
+    "You develop difficulty breathing.",
+    "You become dehydrated.",
+    "Symptoms persist without improvement."
+  ],
+  "disclaimer": "This is a screening aid and does not diagnose disease or replace professional medical advice."
+}
