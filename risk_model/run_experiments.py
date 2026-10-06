@@ -110,4 +110,3 @@ plt.savefig(OUT / "threshold_tradeoff.png", dpi=120); plt.close()
     "threshold": chosen, "threshold_table": table, "seed": SEED,
     "test_metrics_at_threshold": low,
 }, indent=2))
-print(f"\nSaved {OUT/'model.json'} and plots in {OUT}/")
